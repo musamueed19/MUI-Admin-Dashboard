@@ -24,11 +24,13 @@
     "@nivo/geo": "^0.99.0",
     "@nivo/line": "^0.99.0",
     "@nivo/pie": "^0.99.0",
+    "@tailwindcss/vite": "^4.1.17",
     "formik": "^2.4.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^7.10.1",
+    "tailwindcss": "^4.1.17",
     "yup": "^1.7.1"
   },
   "devDependencies": {
