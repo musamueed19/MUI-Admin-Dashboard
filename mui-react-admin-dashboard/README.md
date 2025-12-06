@@ -1,73 +1,36 @@
-# React + TypeScript + Vite
+The Ducks pattern is a modular approach to folder structure that organizes code by feature rather than by file type (actions, reducers, constants). The core idea is that "things that change together should stay together," making large, scalable applications easier to maintain. 
+Core Principles
+The original "ducks" proposal outlined several rules for a file to be considered a "duck": 
+MUST export a function named reducer() as the default export.
+MUST export its action creators as functions.
+MUST have action types in the format npm-module-or-app/reducer/ACTION_TYPE to ensure global uniqueness.
+MAY export action types as UPPER_SNAKE_CASE constants if an external reducer needs to listen for them. 
+Typical Folder Structure
+In a typical implementation, you move away from top-level actions/ and reducers/ folders. Instead, you have a high-level features/ or modules/ directory, with a dedicated folder for each feature, which is the "duck" itself. 
+src/
+|
+├── app/
+| ├── store.js # Central store setup, combining all feature reducers
+| └── App.js 
+|
+├── features/ # Directory for all "ducks" (features)
+| ├── user/
+| | ├── userSlice.js # This file contains all user-related logic (actions, reducer, initial state)
+| | ├── UserProfile.jsx # Components related to the feature
+| | └── index.js # Exports relevant items for use elsewhere
+| |
+| └── products/
+| ├── productsSlice.js # All product-related logic
+| └── ProductsPage.jsx # Components related to the feature 
+|
+└── shared/ # Common components, utilities, or helpers used across features
+├── Button.jsx
+└── utils.js 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Key Characteristics
 
-Currently, two official plugins are available:
+*   **Colocation:** All Redux logic (actions, types, and the reducer) for a single feature is defined within a single file or folder.
+*   **Modularity:** Each "duck" is a self-contained module, making features easy to add, remove, or even turn into reusable libraries.
+*   **Scalability:** This structure helps manage the complexity of large applications by reducing the need to hunt for related files across multiple top-level directories.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This pattern is very similar to the "slices" approach recommended by [Redux Tool

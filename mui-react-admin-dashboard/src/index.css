@@ -13,13 +13,19 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body,
-#root {
+#root,
+.content {
   height: 100%;
   width: 100%;
   font-family: 'Manrope', sans-serif;
 }
+
 
 
 ::-webkit-scrollbar {
